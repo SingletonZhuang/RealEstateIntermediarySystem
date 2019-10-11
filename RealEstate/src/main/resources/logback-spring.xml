@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- 文件输出格式 -->
+    <property name="PATTERN" value="%-12(%d{yyyy-MM-dd HH:mm:ss.SSS}) |-%-5level [%thread] %c [%L] -| %msg%n" />
+    
+    <!-- 开发环境 -->
+    <!-- <springProfile name="dev"> -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>${PATTERN}</pattern>
+		</encoder>
+	</appender>
+	
+	<!-- 测试环境 -->
+	<appender name="profile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--<Encoding>UTF-8</Encoding>-->
+        <File>/home/tkcustomer/logs/info.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>/home/tkcustomer/logs/info-%d-%i{yyyy-MM-dd}.log</FileNamePattern>
+            <MaxHistory>30</MaxHistory>
+            <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <MaxFileSize>200MB</MaxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <append>false</append>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${PATTERN}</pattern>
+        </layout>
+    </appender>
+    
+	<logger name="com.datangwealth.modules" level="debug" />
+	<!-- 日志级别 -->
+    <root>
+        <level value="info"/>
+        <!--<level value="info"/>-->
+        <!--<level value="warn"/>-->
+        <!--<level value="error"/>-->
+        <appender-ref ref="profile"/>
+        <appender-ref ref="console"/>
+    </root>
+    <!-- </springProfile> -->
+    
+</configuration>
